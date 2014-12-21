@@ -1,0 +1,121 @@
+---
+title       : BMR Calculator
+subtitle    : Calculate your Basal Metabolic Rate (BMR) and total calories needed
+author      : ycdu
+job         : Coursera - Developing Data Products
+framework   : io2012       # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : zenburn       # 
+widgets     : [mathjax]     # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+--- #custbg1
+
+<style>
+#custbg1 {
+  background-color: #CA9F9D ;
+}
+</style>
+
+## Introduction
+
+* The Shiny app at <https://ycdu.shinyapps.io/homework/> is a Basal Metabolic Rate (BMR) calculator.
+
+* Basal Metabolic Rate (BMR) is the number of calories that a person will burn if the person stays in bed all day.
+
+* If you've noticed that every year, it becomes harder to eat whatever you want and stay slim, it is probably because your BMR decreases. In general, BMR decreases as you grow older. 
+
+* BMR is calculated based on the person's height, weight, age and gender. Its formula as below:
+
+  Women: 
+  $$BMR = 655 + 9.6 \times weight + 1.8 \times height - 4.7 \times age$$
+
+  Men: 
+  $$BMR = 66 + 13.7 \times weight + 5  \times height - 6.8 \times age$$
+
+  where weight is in kilograms, height is in centimeters and age is in years
+  
+
+
+--- #custbg2
+
+<style>
+#custbg2 {
+  background-color: #EDE0CF ;
+}
+</style>
+
+## BMR Calculation
+
+* The R function below calculates BMR:
+
+```r
+bmrvalue <- function (height, weight, age, gender) {
+  if (gender == 'f') {655 + (9.6 * weight) + (1.8 * height) - ( 4.7 * age )}
+  else {66 + ( 13.7 * weight ) + ( 5 * height) - ( 6.8 * age )}
+}
+```
+
+* A female with weight of 50 Kg, height of 164cm and age of 31 years has the following BMR:
+
+```r
+bmrvalue(164, 50, 31, 'f')
+```
+
+```
+## [1] 1284.5
+```
+
+* The only drawback of the above equations is that it assumes an average muscle-to-fat ratio. Leaner bodies need more calories than fatter ones. Therefore, this equation will be accurate in all but the very muscular (will underestimate calorie needs) and the very fat (will over-estimate calorie needs).
+
+--- #custbg3
+
+<style>
+#custbg3 {
+  background-color: #CBE7A5 ;
+}
+</style>
+
+## Total Calories Expenditure
+
+* To calculate the total daily calories expenditure, an activity factor needs to be applied to Basal Metabolic Rate (BMR). 
+
+* A person who has little or no activity will have a smaller activity factor than a person who regularly exercises.The person with smaller activity factor will have a lower total daily calories expenditure. 
+
+* The Harris Benedict Equation is the formula for calculating the total daily calories expenditure. 
+  $$Total Calorie Expenditure = BMR \times Activity Factor$$
+  
+    * Sedentary i.e. little or no exercise :    Activity Factor = 1.2
+    * Lightly active i.e.light exercise 1-3 days/week :   Activity Factor = 1.375
+    * Moderatetely active i.e. exercise 3-5 days/week :   Activity Factor = 1.55
+    * Very active i.e.exercise/sports 6-7 days a week) :  Activity Factor = 1.725
+    * Extra active i.e hard exercise & physical job :   Activity Factor = 1.9
+
+
+--- .class #id 
+
+
+
+## Total Calories Expenditure (Continued)
+
+* For example, for a person with BMR of 1200 who exercises 3 to 5 days per week, the total daily calories expenditure is:
+
+```r
+activityfactor <- 1.55 # Moderate exercise
+BMR <- 1200
+BMR * activityfactor
+```
+
+```
+## [1] 1860
+```
+
+* The total calories needed to maintain the current weight must be the same as the total calorie expenditure i.e. 1860
+
+* If the total daily calories consumed is higher than the total calories needed, the person will gain weight. 
+
+* On the other hand, if the total daily calories consumed is lower than the total calories needed, the person will lose weight.
+
+
+
+
+
